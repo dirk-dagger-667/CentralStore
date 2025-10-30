@@ -1,7 +1,7 @@
-﻿using LocalStore.Domain;
+﻿using CentralStore.LocalStore.Domain;
 using MassTransit;
 
-namespace LocalStore
+namespace CentralStore.LocalStore
 {
   public static class MassTransitConfig
   {
@@ -20,7 +20,7 @@ namespace LocalStore
 
         busConfig.UsingRabbitMq((context, config) =>
         {
-          config.Host(builder.Configuration["RabbitMQ:Host"]);
+          config.Host(builder.Configuration["QueueMetadata:Host"]);
 
           var storeId = Environment.GetEnvironmentVariable("STORE_ID");
           var queueName = $"{builder.Configuration["QueueMetadata:LocalStoreQueueName"]}{storeId}";

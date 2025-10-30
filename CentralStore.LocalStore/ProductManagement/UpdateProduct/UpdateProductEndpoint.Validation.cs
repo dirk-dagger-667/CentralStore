@@ -1,7 +1,6 @@
-﻿using LocalStore.ProductManagement.UpdateProduct;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace LocalStore.ProductManagementt.UpdateProduct
+namespace CentralStore.LocalStore.ProductManagement.UpdateProduct
 {
   public class UpdateEndpointValidator : AbstractValidator<UpdateProductRequest>
   {

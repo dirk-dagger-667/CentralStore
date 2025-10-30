@@ -1,9 +1,7 @@
 ﻿using CentralStore.ProductManagent.Filters;
 using CentralStore.Shared;
-using MassTransit;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.Extensions.Options;
 using CentralStore.Shared.Messages;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CentralStore.ProductManagement.UpdateProduct
@@ -21,9 +19,7 @@ namespace CentralStore.ProductManagement.UpdateProduct
     private static async Task<Results<NoContent, NotFound, Conflict>> Handle(
       [FromRoute] Guid id,
       [FromBody] UpdateProductRequest request,
-      ISendEndpointProvider sendEndpointProvider,
-      IOptions<QueueMetadata> options,
-      IConfiguration config,
+      IMassTransitSendResolver mtResolver,
       IUpdateProductService service)
     {
       if (await service.IsConflictAsync(request.Id, request.ConcurrencyToken))
@@ -50,9 +46,7 @@ namespace CentralStore.ProductManagement.UpdateProduct
             return TypedResults.NotFound();
           }
 
-          var queueName = $"{options.Value.LocalStoreQueueName}{request.StoreId}";
-          var endpoint = await sendEndpointProvider
-                .GetSendEndpoint(new Uri($"rabbitmq://{config["RabbitMQ:Host"]}/{queueName}"));
+          var endpoint = await mtResolver.GetSendEndpoint(request.StoreId);
 
           await endpoint.Send(new UpdateProductMessage(previousState.ToDto(), currentState.ToDto()));
 

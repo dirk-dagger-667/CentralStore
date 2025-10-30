@@ -3,7 +3,7 @@ using MassTransit;
 using CentralStore.Shared.Dtos;
 using CentralStore.Shared.Messages;
 
-namespace CentralStore.ProductManagementt.CreateProducts
+namespace CentralStore.ProductManagement.CreateProducts
 {
   public record CreateProductRequest(
   string Name,

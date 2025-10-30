@@ -1,11 +1,11 @@
-﻿using LocalStore.Shared;
+﻿using CentralStore.LocalStore.Shared;
 using MassTransit;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Options;
 using CentralStore.Shared.Messages;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LocalStore.ProductManagement.RemoveProduct
+namespace CentralStore.LocalStore.ProductManagement.RemoveProduct
 {
   public class RemoveProductEndpoint : IEndpoint
   {
@@ -19,30 +19,27 @@ namespace LocalStore.ProductManagement.RemoveProduct
     private static async Task<Results<NoContent, NotFound, Conflict>> Handle(
       [FromRoute] Guid id,
       [FromBody] RemoveProductRequest request,
-      ISendEndpointProvider sendEndpointProvider,
       IOptions<QueueMetadata> options,
       IConfiguration config,
-      IRemoveProductService service)
+      IRemoveProductService service,
+      IMassTransitSendResolver mtResolver)
     {
       var previousState = await service.GetProductAsync(request);
 
       if (previousState is null)
         return TypedResults.Conflict();
 
+      var result = await service.RemoveProductAsync(request.Id);
+
       using (var trans = await service.BeginTransactionAsync())
       {
         try
         {
-          var result = await service.RemoveProductAsync(request.Id);
-
           if (result == 0)
             return TypedResults.NotFound();
 
           var storeId = config[options.Value.StoreIdConfigKey];
-          var queueName = $"{options.Value.CentralStoreQueueName}";
-          var endpoint = await sendEndpointProvider
-                .GetSendEndpoint(new Uri($"rabbitmq://{config["RabbitMQ:Host"]}/{queueName}"));
-
+          var endpoint = await mtResolver.GetSendEndpoint();
           await endpoint.Send(new RemoveProductMessage(previousState.ToDto()),
             mContext => mContext.Headers.Set(options.Value.StoreIdHeaderKey, storeId));
 

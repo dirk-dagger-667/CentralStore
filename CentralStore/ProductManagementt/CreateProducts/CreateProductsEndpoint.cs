@@ -1,13 +1,11 @@
-﻿using CentralStore.ProductManagent.Filters;
+﻿using CentralStore.ProductManagement.CreateProducts;
+using CentralStore.ProductManagent.Filters;
 using CentralStore.Shared;
-using MassTransit;
+using CentralStore.Shared.Messages;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using CentralStore.Shared.Messages;
-using CentralStore.ProductManagementt.CreateProducts;
 
-namespace CentralStore.ProductManagementt.CreateProducts
+namespace CentralStore.ProductManagement.CreateProducts
 {
   public class CreateProductsEndpoint : IEndpoint
   {
@@ -21,19 +19,13 @@ namespace CentralStore.ProductManagementt.CreateProducts
 
     private static async Task<Results<
       Created<CreateProductResponse>,
-      NotFound,
         ValidationProblem>> Handle(
       [FromBody] CreateProductRequest request,
-      ISendEndpointProvider sendEndpointProvider,
-      IOptions<QueueMetadata> options,
-      IConfiguration config,
+      IMassTransitSendResolver mtResolver,
       ICreateProductService service)
     {
       var product = service.CreateProduct(request.ToDto(), request.StoreId);
-
-      var queueName = $"{options.Value.LocalStoreQueueName}{request.StoreId}";
-      var endpoint = await sendEndpointProvider
-            .GetSendEndpoint(new Uri($"rabbitmq://{config["RabbitMQ:Host"]}/{queueName}"));
+      var endpoint = await mtResolver.GetSendEndpoint(request.StoreId);
 
       await endpoint.Send(new CreateProductMessage(product.ToDto()));
       await service.SaveChangesAsync();

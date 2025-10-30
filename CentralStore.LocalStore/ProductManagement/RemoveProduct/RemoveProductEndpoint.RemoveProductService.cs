@@ -1,9 +1,9 @@
-﻿using LocalStore.Domain;
-using LocalStore.Shared;
+﻿using CentralStore.LocalStore.Domain;
+using CentralStore.LocalStore.Shared;
 using Microsoft.EntityFrameworkCore;
 using CentralStore.Shared.Dtos;
 
-namespace LocalStore.ProductManagement.RemoveProduct
+namespace CentralStore.LocalStore.ProductManagement.RemoveProduct
 {
   public class RemoveProductService : ServiceBase, IRemoveProductService
   {

@@ -66,7 +66,7 @@ namespace CentralStore.ProductManagent.Filters
           extensions);
       }
 
-      return next(invocationContext);
+      return await next(invocationContext);
     }
   }
 }

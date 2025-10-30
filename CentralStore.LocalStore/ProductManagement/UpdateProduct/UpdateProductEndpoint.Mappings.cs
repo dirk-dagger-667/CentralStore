@@ -1,7 +1,7 @@
 ﻿using CentralStore.Shared.Dtos;
 using CentralStore.Shared.Messages;
 
-namespace LocalStore.ProductManagement.UpdateProduct
+namespace CentralStore.LocalStore.ProductManagement.UpdateProduct
 {
   public record UpdateProductRequest(Guid Id,
   string Name,

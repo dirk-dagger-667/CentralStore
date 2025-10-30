@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using CentralStore.Shared.Messages;
-using CentralStore.ProductManagementt.CreateProducts;
+using CentralStore.ProductManagement.CreateProducts;
 
 namespace CentralStore.ProductManagement.CreateProduct
 {

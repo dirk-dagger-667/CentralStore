@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using CentralStore.Shared.Messages;
 
-namespace LocalStore.ProductManagement.CreateProduct
+namespace CentralStore.LocalStore.ProductManagement.CreateProduct
 {
   public class CreationFailedConsumer(ICreateProductService service) : IConsumer<CreationFailedMessage>
   {

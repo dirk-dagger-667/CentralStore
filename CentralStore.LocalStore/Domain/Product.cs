@@ -1,6 +1,6 @@
 ﻿using CentralStore.Shared.Dtos;
 
-namespace LocalStore.Domain
+namespace CentralStore.LocalStore.Domain
 {
   public class Product : ProductBase { }
 }

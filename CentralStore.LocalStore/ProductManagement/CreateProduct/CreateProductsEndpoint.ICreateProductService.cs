@@ -1,8 +1,8 @@
-﻿using LocalStore.Domain;
-using LocalStore.Shared;
+﻿using CentralStore.LocalStore.Domain;
+using CentralStore.LocalStore.Shared;
 using CentralStore.Shared.Dtos;
 
-namespace LocalStore.ProductManagement.CreateProduct
+namespace CentralStore.LocalStore.ProductManagement.CreateProduct
 {
   public interface ICreateProductService : IService
   {

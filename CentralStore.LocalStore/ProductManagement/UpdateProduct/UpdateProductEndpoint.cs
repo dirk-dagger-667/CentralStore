@@ -1,12 +1,12 @@
-﻿using LocalStore.ProductManagent.Filters;
-using LocalStore.Shared;
+﻿using CentralStore.LocalStore.ProductManagent.Filters;
+using CentralStore.LocalStore.Shared;
 using MassTransit;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Options;
 using CentralStore.Shared.Messages;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LocalStore.ProductManagement.UpdateProduct
+namespace CentralStore.LocalStore.ProductManagement.UpdateProduct
 {
   public class UpdateProductEndpoint : IEndpoint
   {
@@ -21,11 +21,13 @@ namespace LocalStore.ProductManagement.UpdateProduct
     private static async Task<Results<NoContent, NotFound, Conflict>> Handle(
       [FromRoute] Guid id,
       [FromBody] UpdateProductRequest request,
-      ISendEndpointProvider sendEndpointProvider,
       IOptions<QueueMetadata> options,
       IConfiguration config,
-      IUpdateProductService service)
+      IUpdateProductService service,
+      IMassTransitSendResolver uriResolver)
     {
+      // Send to Central Store
+
       if (await service.IsConflictAsync(request.Id, request.ConcurrencyToken))
         return TypedResults.Conflict();
 
@@ -51,9 +53,7 @@ namespace LocalStore.ProductManagement.UpdateProduct
           }
 
           var storeId = config[options.Value.StoreIdConfigKey];
-          var queueName = $"{options.Value.LocalStoreQueueName}";
-          var endpoint = await sendEndpointProvider
-                .GetSendEndpoint(new Uri($"rabbitmq://{config["RabbitMQ:Host"]}/{queueName}"));
+          var endpoint = await uriResolver.GetSendEndpoint();
 
           await endpoint.Send(new UpdateProductMessage(previousState.ToDto(),
             currentState!.ToDto()),

@@ -1,7 +1,7 @@
-﻿using LocalStore.Domain;
+﻿using CentralStore.LocalStore.Domain;
 using CentralStore.Shared.Dtos;
 
-namespace LocalStore.Shared
+namespace CentralStore.LocalStore.Shared
 {
   public static class ProductMappings
   {

@@ -1,11 +1,12 @@
 ﻿using CentralStore.Domain;
+using CentralStore.Shared;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace CentralStore.ProductManagementt.GetProduct
+namespace CentralStore.ProductManagement.GetProduct
 {
-  public class GetProductEndpoint
+  public class GetProductEndpoint : IEndpoint
   {
     private const string Route = "api/products/{id}/";
     private const string Tag = "Products";
