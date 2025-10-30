@@ -1,0 +1,67 @@
+Run in the following order from Swagger of each store type(Local or Central).
+
+1. Central store as source workflow:
+
+	1.1. Create Product CentralStore:
+	{
+	"name": "ASDASD",
+	"description": "ASDASD",
+	"price": 10,
+	"minPrice": 10,
+	"storeId": "1af34956-9cd2-45c3-ac5d-be939c6d6e35"
+	}
+
+	1.2. Update Product CentralStore:
+	{
+	"id": "08DE172B-4F63-8E5E-AC13-000647000000", //Take the Id from the response of the Create Product endpoint 1.1
+	"name": "ASDASD123123123",
+	"description": "ASDASD123123123",
+	"price": 20,
+	"minPrice": 15,
+	"storeId": "1AF34956-9CD2-45C3-AC5D-BE939C6D6E35",
+	"concurrencyToken": "778340C9-A37E-46EA-B0A0-CF725E27858A" //Take the Id from the response of the Create Product endpoint 1.1
+	}
+
+	1.3. Remove Product CentralStore:
+	{
+	"id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", //Take the Id from the response of the Create Product endpoint 1.1
+	"concurrencyToken": "3fa85f64-5717-4562-b3fc-2c963f66afa6", //Take the Id from the response of the Create Product endpoint 1.1
+	"storeId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+	}
+
+	1.4. Get Product CentralStore => //Take the Id from the response of the Create Product endpoint 1.1
+
+	1.5. Get Product LocalStore => //Take the Id from the response of the Create Product endpoint of 1.1. or 1.4.
+
+2.Local store as source workflow:
+
+	2.1. Create Product LocalStore:
+	{
+	"name": "ASDASD",
+	"description": "ASDASD",
+	"price": 10,
+	"minPrice": 10,
+	"storeId": "1af34956-9cd2-45c3-ac5d-be939c6d6e35"
+	}
+
+	2.2. Update Product LocalStore:
+	{
+	"id": "08DE172B-4F63-8E5E-AC13-000647000000", //Take the Id from the response of the Create Product endpoint 2.1.
+	"name": "ASDASD123123123",
+	"description": "ASDASD123123123",
+	"price": 20,
+	"minPrice": 15,
+	"storeId": "1AF34956-9CD2-45C3-AC5D-BE939C6D6E35",
+	"concurrencyToken": "778340C9-A37E-46EA-B0A0-CF725E27858A" //Take the Id from the response of the Create Product endpoint 2.1.
+	}
+
+	2.3. Remove Product LocalStore:
+	{
+	"id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", //Take the Id from the response of the Create Product endpoint 2.1.
+	"concurrencyToken": "3fa85f64-5717-4562-b3fc-2c963f66afa6", //Take the Id from the response of the Create Product endpoint 2.1.
+	"storeId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+	}
+
+	2.4. Get Product LocalStore => //Take the Id from the response of the Create Product endpoint 2.1.
+
+	2.5. Get Product CentralStore => //Take the Id from the response of the Create Product endpoint of 2.1. or 2.4.

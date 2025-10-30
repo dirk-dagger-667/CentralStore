@@ -1,0 +1,152 @@
+version: '3.8'
+
+services:
+  rabbit-mq:
+    image: rabbitmq:3-management
+    container_name: rabbit-mq
+    ports:
+      - "5672:5672"       # RabbitMQ messaging
+      - "5001:15672"      # Management UI
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - store-app-network
+
+  centralstore-db-server:
+    image: mcr.microsoft.com/mssql/server:2019-CU32-GDR2-ubuntu-20.04
+    container_name: centralstore-db-server
+    ports:
+      - "4001:1433"
+    environment:
+      # - ConnectionStrings__Default=Data Source=centralstore-db-server,1433;Initial Catalog=CentralStoreDb;Persist Security Info=True;User ID=sa;Password=P@ssw0rd123;TrustServerCertificate=True;
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=P@ssw0rd123
+      - MSSQL_PID=Developer
+    # volumes:
+    #   - centralstore-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P P@ssw0rd123 -C -Q \"SELECT 1\" -b -o dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - store-app-network
+
+  localstore1-db-server:
+    image: mcr.microsoft.com/mssql/server:2019-CU32-GDR2-ubuntu-20.04
+    container_name: localstore1-db-server
+    ports:
+      - "4002:1433"
+    environment:
+      # - ConnectionStrings__Default=Data Source=localstore1-db-server,1433;Initial Catalog=LocalStoreDb;Persist Security Info=True;User ID=sa;Password=P@ssw0rd123;TrustServerCertificate=True;
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=P@ssw0rd123
+      - MSSQL_PID=Developer
+    # volumes:
+    #   - localstore1-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P P@ssw0rd123 -C -Q \"SELECT 1\" -b -o dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - store-app-network
+
+  # localstore2-db-server:
+  #   image: mcr.microsoft.com/mssql/server:2019-CU32-GDR2-ubuntu-20.04
+  #   container_name: localstore2-db-server
+  #   ports:
+  #     - "4003:1433"
+  #   environment:
+  #     - ConnectionStrings__Default=Data Source=localstore2-db-server,1433;Initial Catalog=LocalStoreDb;Persist Security Info=True;User ID=sa;Password=P@ssw0rd123;TrustServerCertificate=True;
+  #     - ACCEPT_EULA=Y
+  #     - SA_PASSWORD=P@ssw0rd123
+  #     - MSSQL_PID=Developer
+  #   volumes:
+  #     - localstore2-data:/var/opt/mssql
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P P@ssw0rd123 -C -Q \"SELECT 1\" -b -o dev/null"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+  #     start_period: 30s
+  #   networks:
+  #     - store-app-network
+
+  centralstore:
+    image: ${DOCKER_REGISTRY-}centralstore
+    build:
+      context: .
+      dockerfile: CentralStore/Dockerfile
+    container_name: centralstore
+    ports:
+      - "5002:8080"
+    environment:
+      - ConnectionStrings__Default=Data Source=centralstore-db-server,1433;Initial Catalog=CentralStoreDb;Persist Security Info=True;User ID=sa;Password=P@ssw0rd123;TrustServerCertificate=True;
+      - RabbitMQ__Host=rabbit-mq
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+     rabbit-mq:
+        condition: service_healthy
+     centralstore-db-server:
+        condition: service_healthy
+    networks:
+      - store-app-network
+
+  localstore-1:
+    image: ${DOCKER_REGISTRY-}localstore
+    build:
+      context: .
+      dockerfile: CentralStore.LocalStore/Dockerfile
+    container_name: localstore-1
+    ports:
+      - "5003:8080"
+    environment:
+      - STORE_ID=1af34956-9cd2-45c3-ac5d-be939c6d6e35
+      - ConnectionStrings__Default=Data Source=localstore1-db-server,1433;Initial Catalog=LocalStoreDb;Persist Security Info=True;User ID=sa;Password=P@ssw0rd123;TrustServerCertificate=True;
+      - RabbitMQ__Host=rabbit-mq
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      rabbit-mq:
+        condition: service_healthy
+      localstore1-db-server:
+        condition: service_healthy
+    networks:
+      - store-app-network
+
+  # localstore-2:
+  #   image: ${DOCKER_REGISTRY-}localstore
+  #   build:
+  #     context: .
+  #     dockerfile: CentralStore.LocalStore/Dockerfile
+  #   container_name: localstore-2
+  #   ports:
+  #     - "5004:8080"
+  #   environment:
+  #     - STORE_ID=10861dee-7536-408b-a97d-fdb477d46b1c
+  #     - ConnectionStrings__Default=Data Source=localstore2-db-server,1433;Initial Catalog=LocalStoreDb;Persist Security Info=True;User ID=sa;Password=P@ssw0rd123;TrustServerCertificate=True;
+  #   depends_on:
+  #     rabbit-mq:
+  #       condition: service_healthy
+  #     localstore2-db-server:
+  #       condition: service_healthy
+  #   networks:
+  #     - store-app-network
+
+# volumes:
+#   centralstore-data:
+#   localstore1-data:
+#   localstore2-data:
+
+networks:
+  store-app-network:
+    driver: bridge
