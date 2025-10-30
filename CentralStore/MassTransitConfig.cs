@@ -20,7 +20,7 @@ namespace CentralStore
 
         busConfig.UsingRabbitMq((context, config) =>
         {
-          config.Host(builder.Configuration["RabbitMQ:Host"]);
+          config.Host(builder.Configuration["QueueMetadata:Host"]);
 
           var queueName = builder.Configuration["QueueMetadata:CentralStoreQueueName"] 
           ?? throw new ArgumentNullException("QueueMetadata:CentralStoreQueueName configuration is null");

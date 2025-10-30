@@ -2,7 +2,7 @@
 using CentralStore.Shared;
 using CentralStore.Shared.Dtos;
 
-namespace CentralStore.ProductManagementt.CreateProducts
+namespace CentralStore.ProductManagement.CreateProducts
 {
   public interface ICreateProductService : IService
   {

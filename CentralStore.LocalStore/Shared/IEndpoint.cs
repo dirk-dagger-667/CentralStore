@@ -1,4 +1,4 @@
-﻿namespace LocalStore.Shared
+﻿namespace CentralStore.LocalStore.Shared
 {
   public interface IEndpoint
   {

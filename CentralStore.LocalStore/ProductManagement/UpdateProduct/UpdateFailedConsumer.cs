@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using CentralStore.Shared.Messages;
 
-namespace LocalStore.ProductManagement.UpdateProduct
+namespace CentralStore.LocalStore.ProductManagement.UpdateProduct
 {
   public class UpdateFailedConsumer(IUpdateProductService service) : IConsumer<UpdateFailedMessage>
   {

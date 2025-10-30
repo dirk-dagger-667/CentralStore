@@ -1,7 +1,7 @@
 ﻿using CentralStore.Shared.Dtos;
 using CentralStore.Shared.Messages;
 
-namespace LocalStore.ProductManagement.RemoveProduct
+namespace CentralStore.LocalStore.ProductManagement.RemoveProduct
 {
   public record RemoveProductRequest(Guid Id,
     Guid ConcurrencyToken);

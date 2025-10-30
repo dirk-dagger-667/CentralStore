@@ -1,9 +1,9 @@
-﻿using LocalStore.Shared;
+﻿using CentralStore.LocalStore.Shared;
 using MassTransit;
 using Microsoft.Extensions.Options;
 using CentralStore.Shared.Messages;
 
-namespace LocalStore.ProductManagement.RemoveProduct
+namespace CentralStore.LocalStore.ProductManagement.RemoveProduct
 {
   public class RemovalFailedConsumer(IRemoveProductService service) : IConsumer<RemovalFailedMessage>
   {

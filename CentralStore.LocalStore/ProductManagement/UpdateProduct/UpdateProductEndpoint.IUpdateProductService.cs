@@ -1,8 +1,8 @@
-﻿using LocalStore.Domain;
-using LocalStore.Shared;
+﻿using CentralStore.LocalStore.Domain;
+using CentralStore.LocalStore.Shared;
 using CentralStore.Shared.Dtos;
 
-namespace LocalStore.ProductManagement.UpdateProduct
+namespace CentralStore.LocalStore.ProductManagement.UpdateProduct
 {
   public interface IUpdateProductService : IService
   {

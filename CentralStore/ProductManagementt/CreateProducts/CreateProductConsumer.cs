@@ -2,13 +2,12 @@
 using MassTransit;
 using Microsoft.Extensions.Options;
 using CentralStore.Shared.Messages;
-using CentralStore.ProductManagementt.CreateProducts;
+using CentralStore.ProductManagement.CreateProducts;
 
 namespace CentralStore.ProductManagement.CreateProduct
 {
   public class CreateProductConsumer(ICreateProductService service,
-    ISendEndpointProvider sendEndpointProvider,
-    IConfiguration config,
+    IMassTransitSendResolver mtResolver,
     IOptions<QueueMetadata> options) : IConsumer<CreateProductMessage>
   {
     //Based on the store id header send to the correct local store queue
@@ -25,8 +24,7 @@ namespace CentralStore.ProductManagement.CreateProduct
       {
 
         var queueName = $"{options.Value.LocalStoreQueueName}{storeId}";
-        var endpoint = await sendEndpointProvider
-              .GetSendEndpoint(new Uri($"rabbitmq://{config["RabbitMQ:Host"]}/{queueName}"));
+        var endpoint = await mtResolver.GetSendEndpoint(storeId);
 
         await endpoint.Send(new CreationFailedMessage(context.Message.CurrentState.Id));
         await service.SaveChangesAsync();

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 
-namespace LocalStore.Shared
+namespace CentralStore.LocalStore.Shared
 {
   public interface IService
   {

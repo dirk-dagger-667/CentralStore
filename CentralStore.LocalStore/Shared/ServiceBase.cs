@@ -1,7 +1,7 @@
-﻿using LocalStore.Domain;
+﻿using CentralStore.LocalStore.Domain;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace LocalStore.Shared
+namespace CentralStore.LocalStore.Shared
 {
   public abstract class ServiceBase(LocalStoreDbContext dbContext) : IService
   {

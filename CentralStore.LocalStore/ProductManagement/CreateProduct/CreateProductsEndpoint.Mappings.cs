@@ -1,9 +1,9 @@
-﻿using LocalStore.Domain;
+﻿using CentralStore.LocalStore.Domain;
 using MassTransit;
 using CentralStore.Shared.Dtos;
 using CentralStore.Shared.Messages;
 
-namespace LocalStore.ProductManagement.CreateProduct
+namespace CentralStore.LocalStore.ProductManagement.CreateProduct
 {
   public record CreateProductRequest(
   string Name,

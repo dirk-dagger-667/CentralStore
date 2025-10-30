@@ -92,7 +92,6 @@ services:
       - "5002:8080"
     environment:
       - ConnectionStrings__Default=Data Source=centralstore-db-server,1433;Initial Catalog=CentralStoreDb;Persist Security Info=True;User ID=sa;Password=P@ssw0rd123;TrustServerCertificate=True;
-      - RabbitMQ__Host=rabbit-mq
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
      rabbit-mq:
@@ -113,7 +112,6 @@ services:
     environment:
       - STORE_ID=1af34956-9cd2-45c3-ac5d-be939c6d6e35
       - ConnectionStrings__Default=Data Source=localstore1-db-server,1433;Initial Catalog=LocalStoreDb;Persist Security Info=True;User ID=sa;Password=P@ssw0rd123;TrustServerCertificate=True;
-      - RabbitMQ__Host=rabbit-mq
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
       rabbit-mq:

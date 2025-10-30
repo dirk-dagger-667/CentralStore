@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
-namespace LocalStore.Domain
+namespace CentralStore.LocalStore.Domain
 {
   public class LocalStoreDbContext : DbContext
   {

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9 d17.14
+VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralStore", "CentralStore\CentralStore.csproj", "{12B34239-347F-45A1-A319-A0432686C2A5}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralStore.Shared", "CentralStore.Shared\CentralStore.Shared.csproj", "{FCF7D04A-5834-418A-84BA-D1AD77A0BF0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralStore.IntegrationTests", "..\CentralStore.IntegrationTests\CentralStore.IntegrationTests.csproj", "{07B4FB23-CD86-4CB9-9BF6-3E47D464D18E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{FCF7D04A-5834-418A-84BA-D1AD77A0BF0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCF7D04A-5834-418A-84BA-D1AD77A0BF0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCF7D04A-5834-418A-84BA-D1AD77A0BF0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07B4FB23-CD86-4CB9-9BF6-3E47D464D18E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07B4FB23-CD86-4CB9-9BF6-3E47D464D18E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07B4FB23-CD86-4CB9-9BF6-3E47D464D18E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07B4FB23-CD86-4CB9-9BF6-3E47D464D18E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

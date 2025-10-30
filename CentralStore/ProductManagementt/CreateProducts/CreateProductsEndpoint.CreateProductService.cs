@@ -3,7 +3,7 @@ using CentralStore.Shared;
 using Microsoft.EntityFrameworkCore;
 using CentralStore.Shared.Dtos;
 
-namespace CentralStore.ProductManagementt.CreateProducts
+namespace CentralStore.ProductManagement.CreateProducts
 {
   public class CreateProductsService : ServiceBase, ICreateProductService
   {

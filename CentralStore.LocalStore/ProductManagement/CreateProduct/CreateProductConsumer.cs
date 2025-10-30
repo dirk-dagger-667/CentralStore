@@ -1,14 +1,14 @@
-﻿using LocalStore.Shared;
+﻿using CentralStore.LocalStore.Shared;
 using MassTransit;
 using Microsoft.Extensions.Options;
 using CentralStore.Shared.Messages;
 
-namespace LocalStore.ProductManagement.CreateProduct
+namespace CentralStore.LocalStore.ProductManagement.CreateProduct
 {
   public class CreateProductConsumer(ICreateProductService service,
-    ISendEndpointProvider sendEndpointProvider,
     IOptions<QueueMetadata> options,
-    IConfiguration config) : IConsumer<CreateProductMessage>
+    IConfiguration config,
+    IMassTransitSendResolver mtResolver) : IConsumer<CreateProductMessage>
   {
     //Send to central store queue
     public async Task Consume(ConsumeContext<CreateProductMessage> context)
@@ -18,13 +18,10 @@ namespace LocalStore.ProductManagement.CreateProduct
         var createRslt = service.CreateProduct(context.Message.CurrentState);
         await service.SaveChangesAsync();
       }
-      catch (Exception ex)
+      catch (Exception)
       {
         var storeId = config[options.Value.StoreIdConfigKey];
-
-        var queueName = $"{options.Value.CentralStoreQueueName}";
-        var endpoint = await sendEndpointProvider
-              .GetSendEndpoint(new Uri($"rabbitmq://{config["RabbitMQ:Host"]}/{queueName}"));
+        var endpoint = await mtResolver.GetSendEndpoint();
 
         await endpoint.Send(new CreationFailedMessage(context.Message.CurrentState.Id),
           mContext => mContext.Headers.Set(options.Value.StoreIdHeaderKey, storeId));
