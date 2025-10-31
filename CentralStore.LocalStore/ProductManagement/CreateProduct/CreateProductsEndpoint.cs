@@ -1,10 +1,10 @@
 ﻿using CentralStore.LocalStore.ProductManagent.Filters;
 using CentralStore.LocalStore.Shared;
+using CentralStore.Shared.Messages;
 using MassTransit;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using CentralStore.Shared.Messages;
 
 namespace CentralStore.LocalStore.ProductManagement.CreateProduct
 {

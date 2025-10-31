@@ -2,7 +2,7 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http.Features;
 
-namespace CentralStore.ProductManagent.Filters
+namespace CentralStore.ProductManagement.Filters
 {
   public class ValidationFilter<T>(
     ILogger<ValidationFilter<T>> logger,

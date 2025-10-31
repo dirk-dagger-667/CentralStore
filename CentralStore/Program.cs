@@ -1,5 +1,5 @@
 using CentralStore.Domain;
-using CentralStore.ProductManagement.CreateProducts;
+using CentralStore.ProductManagement.CreateProduct;
 using CentralStore.ProductManagement.RemoveProduct;
 using CentralStore.ProductManagement.UpdateProduct;
 using CentralStore.Shared;

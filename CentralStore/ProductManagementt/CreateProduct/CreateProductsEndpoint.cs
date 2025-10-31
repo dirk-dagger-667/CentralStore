@@ -1,11 +1,10 @@
-﻿using CentralStore.ProductManagement.CreateProducts;
-using CentralStore.ProductManagent.Filters;
+﻿using CentralStore.ProductManagement.Filters;
 using CentralStore.Shared;
 using CentralStore.Shared.Messages;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CentralStore.ProductManagement.CreateProducts
+namespace CentralStore.ProductManagement.CreateProduct
 {
   public class CreateProductsEndpoint : IEndpoint
   {

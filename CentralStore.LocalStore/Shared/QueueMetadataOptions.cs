@@ -4,6 +4,7 @@
   {
     public const string SectionName = nameof(QueueMetadata);
 
+    public required string Host { get; set; }
     public required string StoreIdHeaderKey { get; set; }
     public required string StoreIdConfigKey { get; set; }
     public required string LocalStoreQueueName { get; set; }

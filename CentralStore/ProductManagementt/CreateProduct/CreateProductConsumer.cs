@@ -2,7 +2,6 @@
 using MassTransit;
 using Microsoft.Extensions.Options;
 using CentralStore.Shared.Messages;
-using CentralStore.ProductManagement.CreateProducts;
 
 namespace CentralStore.ProductManagement.CreateProduct
 {

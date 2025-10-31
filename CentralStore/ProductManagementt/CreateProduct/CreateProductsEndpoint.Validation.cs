@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace CentralStore.ProductManagement.CreateProducts
+namespace CentralStore.ProductManagement.CreateProduct
 {
   public class CreateEdnpointValidator: AbstractValidator<CreateProductRequest>
   {

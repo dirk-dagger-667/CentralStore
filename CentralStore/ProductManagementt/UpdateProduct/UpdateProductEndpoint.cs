@@ -1,4 +1,4 @@
-﻿using CentralStore.ProductManagent.Filters;
+﻿using CentralStore.ProductManagement.Filters;
 using CentralStore.Shared;
 using CentralStore.Shared.Messages;
 using Microsoft.AspNetCore.Http.HttpResults;
