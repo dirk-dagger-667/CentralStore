@@ -22,8 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CentralStore\CentralStore.LocalStore\CentralStore.LocalStore.csproj" />
-    <ProjectReference Include="..\CentralStore\CentralStore\CentralStore.csproj" />
+    <ProjectReference Include="..\CEntralStore.LocalStore\CentralStore.LocalStore.csproj" />
+    <ProjectReference Include="..\CentralStore.Shared\CentralStore.Shared.csproj" />
+    <ProjectReference Include="..\CentralStore\CentralStore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
