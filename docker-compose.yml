@@ -25,7 +25,6 @@ services:
     ports:
       - "4001:1433"
     environment:
-      # - ConnectionStrings__Default=Data Source=centralstore-db-server,1433;Initial Catalog=CentralStoreDb;Persist Security Info=True;User ID=sa;Password=P@ssw0rd123;TrustServerCertificate=True;
       - ACCEPT_EULA=Y
       - SA_PASSWORD=P@ssw0rd123
       - MSSQL_PID=Developer
@@ -46,7 +45,6 @@ services:
     ports:
       - "4002:1433"
     environment:
-      # - ConnectionStrings__Default=Data Source=localstore1-db-server,1433;Initial Catalog=LocalStoreDb;Persist Security Info=True;User ID=sa;Password=P@ssw0rd123;TrustServerCertificate=True;
       - ACCEPT_EULA=Y
       - SA_PASSWORD=P@ssw0rd123
       - MSSQL_PID=Developer
