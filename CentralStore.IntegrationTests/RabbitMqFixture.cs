@@ -15,8 +15,8 @@ namespace CentralStore.IntegrationTests
     {
       _rabbitMqContainer = new RabbitMqBuilder()
           .WithImage("rabbitmq:3-management")
-          .WithPortBinding(5672, 5672) // AMQP
-          .WithPortBinding(15672, 15672) // Management UI (optional)
+          .WithPortBinding(5672, true) // AMQP
+          .WithPortBinding(15672, true) // Management UI (optional)
           .WithUsername("guest")
           .WithPassword("guest")// Default creds
           .Build();

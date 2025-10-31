@@ -21,8 +21,6 @@ namespace CentralStore.ProductManagement.CreateProduct
       }
       catch (Exception)
       {
-
-        var queueName = $"{options.Value.LocalStoreQueueName}{storeId}";
         var endpoint = await mtResolver.GetSendEndpoint(storeId);
 
         await endpoint.Send(new CreationFailedMessage(context.Message.CurrentState.Id));
